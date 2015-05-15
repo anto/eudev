@@ -1,0 +1,26 @@
+From: Jaret Jay Cantu <jaret@realitysend.com>
+Date: Sat, 16 May 2015 18:21:35 -0400
+Subject: Always install non-arch specific files in /lib/udev
+
+Debian multiarch will install library files in an architecture
+specific /lib directory, but the udev text files should not be.
+This mimics the behavior of systemd on Debian systems (and any
+system using eudev that is not specifying a non-standard
+rootlibexecdir).
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index ed0635e..f8c0e7f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -149,7 +149,7 @@ AS_IF(
+ AC_SUBST([rootprefix], [$with_rootprefix])
+ AC_SUBST([rootlibdir], [$with_rootlibdir])
+ AC_SUBST([rootlibexecdir], [${with_rootlibexecdir}])
+-AC_SUBST([udevlibexecdir], [${rootlibexecdir}])
++AC_SUBST([udevlibexecdir], [${rootprefix}/lib/udev])
+ 
+ # sysconfdir paths
+ AC_SUBST([udevconfdir],[${sysconfdir}/udev])

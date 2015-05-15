@@ -12,3 +12,6 @@ Load-sg-module-from-80-drivers.rules.patch
 Updates-to-default-device-permissions.patch
 Set-default-polling-interval-on-removable-devices-as.patch
 more-cd-aliases.patch
+
+## Devuan/eudev specific patches
+Always-install-non-arch-specific-files-in-lib-udev.patch
