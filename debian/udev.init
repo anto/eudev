@@ -109,7 +109,7 @@ make_static_nodes() {
 
 ##############################################################################
 
-[ -x /sbin/udevd ] || exit 0
+[ -x /usr/sbin/udevd ] || exit 0
 
 PATH="/sbin:/bin"
 

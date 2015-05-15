@@ -1,1 +1,1 @@
-/bin/udevadm /sbin/udevadm
+/usr/bin/udevadm /usr/sbin/udevadm

@@ -1,4 +1,4 @@
-bin/udevadm
+usr/bin/udevadm
 lib/udev/ata_id
 lib/udev/scsi_id
 lib/udev/cdrom_id

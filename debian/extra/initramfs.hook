@@ -22,11 +22,11 @@ root_over_the_network() {
 
 . /usr/share/initramfs-tools/hook-functions
 
-copy_exec /sbin/udevd      /sbin
-copy_exec /bin/udevadm    /bin
+copy_exec /usr/sbin/udevd     /sbin
+copy_exec /usr/bin/udevadm    /bin
 
 # copy compat symlink
-cp -a /sbin/udevadm $DESTDIR/sbin/udevadm
+cp -a /usr/sbin/udevadm $DESTDIR/sbin/udevadm
 
 mkdir -p $DESTDIR/etc/udev
 cp -p /etc/udev/udev.conf $DESTDIR/etc/udev/
