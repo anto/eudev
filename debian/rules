@@ -12,22 +12,8 @@ endif
 CONFFLAGS = \
 	--with-rootprefix= \
 	--with-rootlibdir=/lib/$(DEB_HOST_MULTIARCH) \
-	--with-zshcompletiondir=/usr/share/zsh/vendor-completions \
-	--with-sysvinit-path=/etc/init.d \
-	--with-sysvrcnd-path=/etc \
 	--with-firmware-path=/lib/firmware \
-	--with-debug-shell=/bin/bash \
-	--with-telinit=/lib/sysvinit/telinit \
-	--disable-coredump \
-	--disable-efi \
-	--disable-myhostname \
-	--disable-vconsole \
-	--disable-microhttpd \
-	--disable-sysusers \
-	--disable-silent-rules \
-	--with-ntp-servers="0.debian.pool.ntp.org 1.debian.pool.ntp.org 2.debian.pool.ntp.org 3.debian.pool.ntp.org"  \
-	--with-system-uid-max=999 \
-	--with-system-gid-max=999
+	--disable-silent-rules
 
 ifeq (,$(findstring stage1,$(DEB_BUILD_PROFILES)))
 CONFFLAGS += --enable-libcryptsetup
@@ -38,41 +24,14 @@ CONFFLAGS_deb = \
 	--enable-introspection \
 	--enable-gtk-doc \
 	--enable-compat-libs \
-	PYTHON=python3 \
 	$(NULL)
 
 CONFFLAGS_udeb = \
-	--disable-libcryptsetup \
-	--disable-pam \
-	--disable-audit \
 	--disable-selinux \
-	--disable-smack \
-	--disable-ima \
 	--disable-introspection \
 	--disable-gtk-doc \
-	--disable-binfmt \
-	--disable-readahead \
-	--disable-bootchart \
-	--disable-quotacheck \
-	--disable-tmpfiles \
-	--disable-randomseed \
-	--disable-backlight \
-	--disable-logind \
-	--disable-machined \
-	--disable-hostnamed \
-	--disable-timedated \
-	--disable-networkd \
-	--disable-timesyncd \
-	--disable-localed \
-	--disable-resolved \
-	--disable-polkit \
-	--disable-acl \
-	--disable-gcrypt \
 	--disable-gudev \
-	--disable-rfkill \
-	--disable-multi-seat-x \
-	--disable-manpages \
-	--without-python
+	--disable-manpages
 
 override_dh_auto_configure:
 	dh_auto_configure --builddirectory=build-deb \
@@ -96,43 +55,19 @@ override_dh_auto_clean:
 	rm -rf debian/install/
 	# remove pre-generated man pages so they are rebuilt
 	rm -f man/*.[13578]
-	# remove pre-generated rules and unit files so they are rebuilt
-	rm -f rules/99-systemd.rules \
-		units/emergency.service \
-		units/systemd-udevd.service \
-		units/systemd-udev-settle.service \
-		units/systemd-udev-trigger.service
-	# remove Python byte code files
-	rm -f *.pyc
 
 override_dh_install:
 	# remove unnecessary / unused files
-	rm -f debian/install/*/usr/share/doc/systemd/LICENSE.*
+	rm -f debian/install/*/usr/share/doc/eudev/LICENSE.*
 	rm -f debian/install/*/var/log/README
 	rm -f debian/install/*/etc/init.d/README
 	rm -f debian/install/*/usr/share/man/man8/kernel-install.8
 	rm -f debian/install/*/usr/bin/kernel-install
-	rm -f debian/install/*/usr/share/zsh/vendor-completions/_kernel-install
-	rm -f debian/install/*/usr/share/bash-completion/completions/kernel-install
 	rm -rf debian/install/*/usr/lib/kernel/install.d
 	rm -rf debian/install/*/etc/rpm/
 	rm -rf debian/install/*/usr/lib/rpm/
 	rm -rf debian/install/*/etc/kernel/
-	rm -f debian/install/*/usr/lib/sysctl.d/50-default.conf
 	find debian/install/ -name '*.la' -delete
-	# remove files related to factory-reset feature
-	find debian/install/ \( -name 'systemd-update-done*' -o \
-		-name systemd-journal-catalog-update.service -o \
-		-name systemd-udev-hwdb-update.service -o \
-		-name ldconfig.service -o \
-		-name etc.conf \) -delete
-	# remove .so for deprecated compatibility libraries
-	rm -f debian/install/*/usr/lib/*/libsystemd-daemon.so
-	rm -f debian/install/*/usr/lib/*/libsystemd-login.so
-	rm -f debian/install/*/usr/lib/*/libsystemd-id128.so
-	rm -f debian/install/*/usr/lib/*/libsystemd-journal.so
-	# remove symlinks enabling default-on services
-	rm -rf debian/install/*/etc/systemd/system/*.target.wants/
 	dh_install -pudev-udeb -plibudev1-udeb --sourcedir=debian/install/udeb
 	dh_install $(BOOTSTRAP_DH_FLAGS) -Nudev-udeb -Nlibudev1-udeb --sourcedir=debian/install/deb --fail-missing
 	# install some files manually, --sourcedir makes that necessary
@@ -177,68 +112,6 @@ override_dh_install:
 		debian/extra/udev-finish \
 		debian/extra/write_net_rules \
 		debian/udev/lib/udev/
-	# systemd
-	cp -a debian/pam-configs debian/libpam-systemd/usr/share/
-	install -D --mode=644 debian/init-functions.d/40-systemd \
-		debian/systemd/lib/lsb/init-functions.d/40-systemd
-	install --mode=644 debian/tmpfiles.d/debian.conf \
-		debian/systemd/usr/lib/tmpfiles.d/
-	install --mode=644 debian/debian-fixup.service \
-		debian/ifup@.service \
-		debian/extra/getty-static.service \
-		debian/extra/hwclock-save.service \
-		debian/extra/systemd-setup-dgram-qlen.service \
-		debian/systemd/lib/systemd/system/
-	install -D --mode=644 debian/extra/network-pre.conf \
-		debian/systemd/lib/systemd/system/networking.service.d/network-pre.conf
-	install --mode=644 debian/extra/udev-finish.service \
-		debian/udev/lib/systemd/system/
-	ln -s ../udev-finish.service debian/udev/lib/systemd/system/sysinit.target.wants/
-	install --mode=755 debian/debian-fixup \
-		debian/systemd/lib/systemd/
-	# Make sure the runlevel services are known by systemd so their targets
-	# get launches. See https://bugzilla.redhat.com/show_bug.cgi?id=1002806
-	for t in poweroff rescue multi-user graphical reboot; do \
-		mkdir -p debian/systemd/lib/systemd/system/$${t}.target.wants;\
-		ln -s ../systemd-update-utmp-runlevel.service \
-			debian/systemd/lib/systemd/system/$${t}.target.wants ;\
-	done
-	# man files for example code in /usr/share/doc
-	mkdir -p debian/systemd/usr/share/man/man3/
-	mv debian/libsystemd-dev/usr/share/man/man3/sd-readahead.3 \
-		debian/libsystemd-dev/usr/share/man/man3/sd_readahead.3 \
-		debian/systemd/usr/share/man/man3/
-	install --mode=755 debian/systemd-logind-launch \
-		debian/systemd/lib/systemd/
-	# remove duplicates
-	# files shipped by systemd-sysv / sysvinit
-	rm debian/systemd/usr/share/man/man1/init.1
-	rm debian/systemd/usr/share/man/man8/halt.8
-	rm debian/systemd/usr/share/man/man8/poweroff.8
-	rm debian/systemd/usr/share/man/man8/reboot.8
-	rm debian/systemd/usr/share/man/man8/shutdown.8
-	rm debian/systemd/usr/share/man/man8/telinit.8
-	rm debian/systemd/usr/share/man/man8/runlevel.8
-	# files shipped by libpam-systemd
-	rm debian/systemd/usr/share/man/man8/pam_systemd.8
-	# files shipped by udev
-	rm -r debian/systemd/etc/udev/
-	rm debian/systemd/lib/systemd/system/systemd-udev*
-	rm debian/systemd/lib/systemd/system/*.target.wants/systemd-udev*
-	rm debian/systemd/lib/systemd/systemd-udevd
-	rm debian/systemd/usr/share/man/man7/udev.7
-	rm debian/systemd/usr/share/man/man8/*udev*.8
-	# files shipped by udev / bash-completion
-	rm debian/systemd/usr/share/bash-completion/completions/udevadm
-	# files systemd by cryptsetup
-ifeq (,$(findstring stage1,$(DEB_BUILD_PROFILES)))
-	rm debian/systemd/usr/share/man/man5/crypttab.5
-endif
-	# files shipped by systemd
-	rm debian/udev/lib/udev/rules.d/70-uaccess.rules
-	rm debian/udev/lib/udev/rules.d/73-seat-late.rules
-	rm debian/udev/lib/udev/rules.d/71-seat.rules
-	rm debian/udev/lib/udev/rules.d/99-systemd.rules
 
 # use symlinked doc directories as the old udev package did
 override_dh_installdocs:
@@ -255,27 +128,19 @@ override_dh_installinit:
 	dh_installinit --name=udevmonitor --no-start
 	dh_installinit --name=udev-fallback-graphics --no-start
 
-# The SysV compat tools (which are symlinks to systemctl) are
-# quasi-essential, so add its dependencies to Pre-Depends
-# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=753589
-override_dh_shlibdeps:
-	dh_shlibdeps -psystemd -- -dPre-Depends -edebian/systemd/bin/systemctl -dDepends
-	dh_shlibdeps --remaining-packages
-
 override_dh_makeshlibs:
 	dh_makeshlibs -plibudev1 --add-udeb=libudev1-udeb
 	dh_makeshlibs --remaining-packages
 
 autoreconf:
 	gtkdocize --copy --docdir docs/
-	intltoolize -f -c
 	autoreconf -f -i
 
 override_dh_autoreconf:
 	dh_autoreconf debian/rules -- autoreconf
 
 override_dh_strip:
-	dh_strip --dbg-package=systemd-dbg
+	dh_strip --dbg-package=eudev-dbg
 
 override_dh_auto_test:
 ifeq (, $(findstring nocheck, $(DEB_BUILD_OPTIONS)))

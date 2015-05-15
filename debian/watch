@@ -1,2 +1,2 @@
 version=3
-http://www.freedesktop.org/software/systemd/systemd-(\d+)\.tar\.xz
+https://github.com/gentoo/eudev/archive/v(\d+)\.tar\.gz

@@ -1,3 +1,5 @@
+Based on the below patch (extra clause at the bottom of the patch):
+
 From: Michael Biebl <biebl@debian.org>
 Date: Sat, 30 Aug 2014 02:01:51 +0200
 Subject: libudev: fix symbol version for udev_queue_flush() and
@@ -12,7 +14,7 @@ Those symbols were introduced in commit
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/libudev/libudev.sym b/src/libudev/libudev.sym
-index 95cd1c7..76726fc 100644
+index 7062e29..503e24f 100644
 --- a/src/libudev/libudev.sym
 +++ b/src/libudev/libudev.sym
 @@ -82,8 +82,6 @@ global:
@@ -24,13 +26,16 @@ index 95cd1c7..76726fc 100644
          udev_queue_new;
          udev_queue_ref;
          udev_queue_unref;
-@@ -114,3 +112,9 @@ LIBUDEV_199 {
- global:
+@@ -113,6 +111,12 @@ global:
          udev_device_set_sysattr_value;
  } LIBUDEV_196;
-+
+ 
 +LIBUDEV_215 {
 +global:
 +        udev_queue_flush;
 +        udev_queue_get_fd;
 +} LIBUDEV_199;
++
+ LIBUDEV_internal {
+ global:
+         *;

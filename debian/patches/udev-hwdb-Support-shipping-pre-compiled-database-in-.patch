@@ -1,3 +1,5 @@
+Patch mostly based on (Removed reference to removed file):
+
 From: Martin Pitt <martin.pitt@ubuntu.com>
 Date: Fri, 17 Oct 2014 15:01:01 +0200
 Subject: udev hwdb: Support shipping pre-compiled database in system images
@@ -16,18 +18,18 @@ into UDEVLIBEXECDIR.
 Adjust systemd-udev-hwdb-update.service to not generate the file in /etc if we
 already have it in /usr.
 ---
- man/udev.xml                              |  4 ++-
- man/udevadm.xml                           |  9 +++++++
- src/libudev/libudev-hwdb.c                | 42 ++++++++++++++++++++++++++-----
- src/udev/udevadm-hwdb.c                   | 13 +++++++++-
- units/systemd-udev-hwdb-update.service.in |  3 +++
- 5 files changed, 63 insertions(+), 8 deletions(-)
+ man/udev.xml               |  4 +++-
+ man/udevadm.xml            |  9 +++++++++
+ src/libudev/libudev-hwdb.c | 42 ++++++++++++++++++++++++++++++++++++------
+ src/libudev/Makefile.am    |  1 +
+ src/udev/udevadm-hwdb.c    | 13 ++++++++++++-
+ 5 files changed, 61 insertions(+), 8 deletions(-)
 
 diff --git a/man/udev.xml b/man/udev.xml
-index 4e5f8f0..68c3586 100644
+index e40af40..7befa97 100644
 --- a/man/udev.xml
 +++ b/man/udev.xml
-@@ -758,7 +758,9 @@
+@@ -735,7 +735,9 @@
  
        <para>The content of all hwdb files is read by
        <citerefentry><refentrytitle>udevadm</refentrytitle><manvolnum>8</manvolnum></citerefentry>
@@ -39,7 +41,7 @@ index 4e5f8f0..68c3586 100644
    </refsect1>
  
 diff --git a/man/udevadm.xml b/man/udevadm.xml
-index fbfa85a..590aaf9 100644
+index 1b349c6..6e2c4b4 100644
 --- a/man/udevadm.xml
 +++ b/man/udevadm.xml
 @@ -495,6 +495,15 @@
@@ -59,7 +61,7 @@ index fbfa85a..590aaf9 100644
            <term><option>--test=<replaceable>string</replaceable></option></term>
            <listitem>
 diff --git a/src/libudev/libudev-hwdb.c b/src/libudev/libudev-hwdb.c
-index e0d4d7c..0a1365e 100644
+index 7af230c..0a1365e 100644
 --- a/src/libudev/libudev-hwdb.c
 +++ b/src/libudev/libudev-hwdb.c
 @@ -256,6 +256,11 @@ static int trie_search_f(struct udev_hwdb *hwdb, const char *search) {
@@ -68,7 +70,7 @@ index e0d4d7c..0a1365e 100644
  
 +static const char hwdb_bin_paths[] =
 +    "/etc/udev/hwdb.bin\0"
-+    UDEVLIBEXECDIR "/hwdb.bin\0";
++    UDEV_LIBEXEC_DIR "/hwdb.bin\0";
 +
 +
  /**
@@ -86,7 +88,7 @@ index e0d4d7c..0a1365e 100644
          hwdb->refcount = 1;
          udev_list_init(udev, &hwdb->properties_list, true);
  
--        hwdb->f = fopen("/etc/udev/hwdb.bin", "re");
+-        hwdb->f = fopen(UDEV_HWDB_BIN, "re");
 +        /* find hwdb.bin in hwdb_bin_paths */
 +        NULSTR_FOREACH(hwdb_bin_path, hwdb_bin_paths) {
 +                hwdb->f = fopen(hwdb_bin_path, "re");
@@ -102,7 +104,7 @@ index e0d4d7c..0a1365e 100644
 +        }
 +
          if (!hwdb->f) {
--                udev_dbg(udev, "error reading /etc/udev/hwdb.bin: %m");
+-                udev_dbg(udev, "error reading " UDEV_HWDB_BIN ": %m");
 +                udev_err(udev, "hwdb.bin does not exist, please run udevadm hwdb --update");
                  udev_hwdb_unref(hwdb);
                  return NULL;
@@ -110,7 +112,7 @@ index e0d4d7c..0a1365e 100644
  
          if (fstat(fileno(hwdb->f), &hwdb->st) < 0 ||
              (size_t)hwdb->st.st_size < offsetof(struct trie_header_f, strings_len) + 8) {
--                udev_dbg(udev, "error reading /etc/udev/hwdb.bin: %m");
+-                udev_dbg(udev, "error reading " UDEV_HWDB_BIN ": %m");
 +                udev_dbg(udev, "error reading %s: %m", hwdb_bin_path);
                  udev_hwdb_unref(hwdb);
                  return NULL;
@@ -118,7 +120,7 @@ index e0d4d7c..0a1365e 100644
  
          hwdb->map = mmap(0, hwdb->st.st_size, PROT_READ, MAP_SHARED, fileno(hwdb->f), 0);
          if (hwdb->map == MAP_FAILED) {
--                udev_dbg(udev, "error mapping /etc/udev/hwdb.bin: %m");
+-                udev_dbg(udev, "error mapping " UDEV_HWDB_BIN ": %m");
 +                udev_dbg(udev, "error mapping %s: %m", hwdb_bin_path);
                  udev_hwdb_unref(hwdb);
                  return NULL;
@@ -126,7 +128,7 @@ index e0d4d7c..0a1365e 100644
  
          if (memcmp(hwdb->map, sig, sizeof(hwdb->head->signature)) != 0 ||
              (size_t)hwdb->st.st_size != le64toh(hwdb->head->file_size)) {
--                udev_dbg(udev, "error recognizing the format of /etc/udev/hwdb.bin");
+-                udev_dbg(udev, "error recognizing the format of " UDEV_HWDB_BIN);
 +                udev_dbg(udev, "error recognizing the format of %s", hwdb_bin_path);
                  udev_hwdb_unref(hwdb);
                  return NULL;
@@ -159,14 +161,14 @@ index e0d4d7c..0a1365e 100644
                  return true;
          return false;
 diff --git a/src/udev/udevadm-hwdb.c b/src/udev/udevadm-hwdb.c
-index 65cbf61..ba9bc71 100644
+index de535de..d677391 100644
 --- a/src/udev/udevadm-hwdb.c
 +++ b/src/udev/udevadm-hwdb.c
-@@ -526,14 +526,20 @@ static int import_file(struct udev *udev, struct trie *trie, const char *filenam
+@@ -533,14 +533,20 @@ static int import_file(struct udev *udev, struct trie *trie, const char *filenam
  static void help(void) {
          printf("Usage: udevadm hwdb OPTIONS\n"
                 "  -u,--update          update the hardware database\n"
-+               "  --usr                generate in " UDEVLIBEXECDIR " instead of /etc/udev\n"
++               "  --usr                generate in " UDEV_LIBEXEC_DIR " instead of /etc/udev\n"
                 "  -t,--test=MODALIAS   query database and print result\n"
                 "  -r,--root=PATH       alternative root path in the filesystem\n"
                 "  -h,--help\n\n");
@@ -183,7 +185,7 @@ index 65cbf61..ba9bc71 100644
                  { "test",   required_argument, NULL, 't' },
                  { "root",   required_argument, NULL, 'r' },
                  { "help",   no_argument,       NULL, 'h' },
-@@ -541,6 +547,7 @@ static int adm_hwdb(struct udev *udev, int argc, char *argv[]) {
+@@ -548,6 +554,7 @@ static int adm_hwdb(struct udev *udev, int argc, char *argv[]) {
          };
          const char *test = NULL;
          const char *root = "";
@@ -191,37 +193,35 @@ index 65cbf61..ba9bc71 100644
          bool update = false;
          struct trie *trie = NULL;
          int err, c;
-@@ -551,6 +558,9 @@ static int adm_hwdb(struct udev *udev, int argc, char *argv[]) {
+@@ -558,6 +565,9 @@ static int adm_hwdb(struct udev *udev, int argc, char *argv[]) {
                  case 'u':
                          update = true;
                          break;
 +                case ARG_USR:
-+                        hwdb_bin_dir = UDEVLIBEXECDIR;
++                        hwdb_bin_dir = UDEV_LIBEXEC_DIR;
 +                        break;
                  case 't':
                          test = optarg;
                          break;
-@@ -624,7 +634,8 @@ static int adm_hwdb(struct udev *udev, int argc, char *argv[]) {
+@@ -631,7 +641,8 @@ static int adm_hwdb(struct udev *udev, int argc, char *argv[]) {
                  log_debug("strings dedup'ed: %8zu bytes (%8zu)",
                            trie->strings->dedup_len, trie->strings->dedup_count);
  
--                if (asprintf(&hwdb_bin, "%s/etc/udev/hwdb.bin", root) < 0) {
+-                if (asprintf(&hwdb_bin, "%s/%s", root, hwdb_bin) < 0) {
 +                hwdb_bin = strjoin(root, "/", hwdb_bin_dir, "/hwdb.bin", NULL);
 +                if (!hwdb_bin) {
                          rc = EXIT_FAILURE;
                          goto out;
                  }
-diff --git a/units/systemd-udev-hwdb-update.service.in b/units/systemd-udev-hwdb-update.service.in
-index 153d93c..62ddd19 100644
---- a/units/systemd-udev-hwdb-update.service.in
-+++ b/units/systemd-udev-hwdb-update.service.in
-@@ -13,6 +13,9 @@ Conflicts=shutdown.target
- After=systemd-readahead-collect.service systemd-readahead-replay.service systemd-remount-fs.service
- Before=sysinit.target shutdown.target systemd-update-done.service
- ConditionNeedsUpdate=/etc
-+ConditionPathExists=|!@udevlibexecdir@/hwdb.bin
-+ConditionPathExists=|/etc/udev/hwdb.bin
-+ConditionDirectoryNotEmpty=|/etc/udev/hwdb.d/
+diff --git a/src/libudev/Makefile.am b/src/libudev/Makefile.am
+index 35f5be2..0fb53e0 100644
+--- a/src/libudev/Makefile.am
++++ b/src/libudev/Makefile.am
+@@ -19,6 +19,7 @@ AM_CPPFLAGS = \
+ 	-DUDEV_CONF_FILE=\"$(udevconffile)\" \
+ 	-DUDEV_HWDB_BIN=\"$(udevhwdbbin)\" \
+ 	-DUDEV_VERSION=$(UDEV_VERSION) \
++	-DUDEV_LIBEXEC_DIR=\"$(udevlibexecdir)\" \
+ 	-I $(top_srcdir)/src/udev
  
- [Service]
- Type=oneshot
+ lib_LTLIBRARIES = \

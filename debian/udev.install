@@ -1,8 +1,5 @@
 etc/udev/
 lib/udev/*
-lib/systemd/system/systemd-udev*
-lib/systemd/system/*.target.wants/systemd-udev*
-lib/systemd/systemd-udevd
 bin/udevadm
 usr/share/man/man7/udev.7
 usr/share/man/man8/*udev*.8

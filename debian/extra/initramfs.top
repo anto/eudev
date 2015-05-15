@@ -15,7 +15,7 @@ if [ -w /sys/kernel/uevent_helper ]; then
 	echo > /sys/kernel/uevent_helper
 fi
 
-/lib/systemd/systemd-udevd --daemon --resolve-names=never
+udevd --daemon --resolve-names=never
 
 udevadm trigger --action=add
 udevadm settle || true

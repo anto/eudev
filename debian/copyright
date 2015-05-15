@@ -1,12 +1,13 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: systemd
-Upstream-Contact: systemd-devel@lists.freedesktop.org
-Source: http://www.freedesktop.org/wiki/Software/systemd/
+Upstream-Name: eudev
+Upstream-Contact: blueness@gentoo.org
+Source: https://github.com/gentoo/eudev/
 
 Files: debian/*
 Copyright: 2010-2013 Tollef Fog Heen <tfheen@debian.org>
            2013 Michael Biebl <biebl@debian.org>
            2013 Michael Stapelberg <stapelberg@debian.org>
+           2015 Jaret Jay Cantu <jaret@realitysend.com>
 License: LGPL-2.1+
 
 Files: *
@@ -41,6 +42,15 @@ Copyright: 2008-2013 Kay Sievers <kay@vrfy.org>
            2013 Simon Peeters
            2013 Nathaniel Chen <nathaniel.chen@intel.com>
            2013 Steven Hiscocks
+           2014 Luca Barbato <lu_zero@gentoo.org>
+           2014 Anthony G. Basile <blueness@gentoo.org>
+           2014 Francisco Izquierdo <klondike@gentoo.org>
+           2014 Ian Stakenvicius <axs@gentoo.org>
+           2014 Matthew Thode <prometheanfire@gentoo.org>
+           2014 Tony Vroon <tony@linx.net>
+           2014 Richard Yao <ryao@gentoo.org>
+
+
 License: LGPL-2.1+
 
 Files: src/shared/MurmurHash3.h

@@ -1,4 +1,3 @@
-lib/systemd/systemd-udevd
 bin/udevadm
 lib/udev/ata_id
 lib/udev/scsi_id

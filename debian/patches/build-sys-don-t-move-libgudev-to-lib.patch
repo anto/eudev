@@ -1,3 +1,5 @@
+Patch based on the below (Makefile location moved in eudev from udev):
+
 From: Michael Biebl <biebl@debian.org>
 Date: Wed, 16 Jul 2014 12:09:47 +0200
 Subject: build-sys: don't move libgudev to /lib
@@ -9,24 +11,31 @@ It depends on libgobject and libgmodule which are installed in /usr/lib.
  Makefile.am | 10 ----------
  1 file changed, 10 deletions(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index 9847ff5..2b0c855 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -3338,16 +3338,6 @@ typelibs_DATA = \
+diff --git a/src/gudev/Makefile.am b/src/gudev/Makefile.am
+index e5890f6..118409a 100644
+--- a/src/gudev/Makefile.am
++++ b/src/gudev/Makefile.am
+@@ -147,23 +147,3 @@ CLEANFILES += \
+ 	$(gir_DATA) $(typelibs_DATA)
  
- CLEANFILES += $(gir_DATA) $(typelibs_DATA)
  endif # HAVE_INTROSPECTION
 -
 -# move lib from $(libdir) to $(rootlibdir) and update devel link, if needed
--libgudev-install-hook:
--	libname=libgudev-1.0.so && $(move-to-rootlibdir)
+-libgudev-install-move-hook:
+-	if test "$(libdir)" != "$(rootlibdir)"; then \
+-		$(MKDIR_P) $(DESTDIR)$(rootlibdir) && \
+-		so_img_name=$$(readlink $(DESTDIR)$(libdir)/libgudev-1.0.so) && \
+-		so_img_rel_target_prefix=$$(echo $(libdir) | sed 's,\(^/\|\)[^/][^/]*,..,g') && \
+-		ln -sf $$so_img_rel_target_prefix$(rootlibdir)/$$so_img_name $(DESTDIR)$(libdir)/libgudev-1.0.so && \
+-		mv $(DESTDIR)$(libdir)/libgudev-1.0.so.* $(DESTDIR)$(rootlibdir); \
+-	fi
 -
--libgudev-uninstall-hook:
+-libgudev-uninstall-move-hook:
 -	rm -f $(DESTDIR)$(rootlibdir)/libgudev-1.0.so*
 -
--INSTALL_EXEC_HOOKS += libgudev-install-hook
--UNINSTALL_EXEC_HOOKS += libgudev-uninstall-hook
- endif
- 
- EXTRA_DIST += \
+-INSTALL_EXEC_HOOKS = \
+-	libgudev-install-move-hook
+-
+-UNINSTALL_EXEC_HOOKS = \
+-	libgudev-uninstall-move-hook
+-

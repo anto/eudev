@@ -11,4 +11,4 @@ stop on runlevel [06]
 expect fork
 respawn
 
-exec /lib/systemd/systemd-udevd --daemon
+exec udevd --daemon
