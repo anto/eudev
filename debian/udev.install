@@ -1,8 +1,8 @@
 etc/udev/
 lib/udev/*
-usr/bin/udevadm
-usr/sbin/udevadm
-usr/sbin/udevd
+bin/udevadm
+sbin/udevadm
+sbin/udevd
 usr/share/man/man7/udev.7
 usr/share/man/man8/*udev*.8
 # currently installed by bash-completion, file a bug to get it removed

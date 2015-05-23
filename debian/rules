@@ -10,6 +10,7 @@ BOOTSTRAP_DH_FLAGS := -Ngir1.2-gudev-1.0 -Nlibgudev-1.0-0 -Nlibgudev-1.0-dev
 endif
 
 CONFFLAGS = \
+	--exec-prefix= \
 	--with-rootprefix= \
 	--with-rootlibdir=/lib/$(DEB_HOST_MULTIARCH) \
 	--with-firmware-path=/lib/firmware \

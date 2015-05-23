@@ -109,7 +109,7 @@ make_static_nodes() {
 
 ##############################################################################
 
-[ -x /usr/sbin/udevd ] || exit 0
+[ -x /sbin/udevd ] || exit 0
 
 PATH="/sbin:/bin"
 
@@ -188,13 +188,13 @@ case "$1" in
     make_static_nodes
 
     # clean up parts of the database created by the initramfs udev
-    /usr/bin/udevadm info --cleanup-db
+    udevadm info --cleanup-db
 
     # set the SELinux context for devices created in the initramfs
     [ -x /sbin/restorecon ] && /sbin/restorecon -R /dev
 
     log_daemon_msg "Starting the hotplug events dispatcher" "udevd"
-    if /usr/sbin/udevd --daemon; then
+    if udevd --daemon; then
 	log_end_msg $?
     else
 	log_warning_msg $?
@@ -203,7 +203,7 @@ case "$1" in
     fi
 
     log_action_begin_msg "Synthesizing the initial hotplug events"
-    if /usr/bin/udevadm trigger --action=add; then
+    if udevadm trigger --action=add; then
 	log_action_end_msg $?
     else
 	log_action_end_msg $?
@@ -213,7 +213,7 @@ case "$1" in
 
     # wait for the udevd childs to finish
     log_action_begin_msg "Waiting for /dev to be fully populated"
-    if /usr/bin/udevadm settle; then
+    if udevadm settle; then
 	log_action_end_msg 0
     else
 	log_action_end_msg 0 'timeout'
@@ -241,7 +241,7 @@ case "$1" in
     fi
 
     log_daemon_msg "Starting the hotplug events dispatcher" "udevd"
-    if /usr/sbin/udevd --daemon; then
+    if udevd --daemon; then
 	log_end_msg $?
     else
 	log_end_msg $?
@@ -249,11 +249,11 @@ case "$1" in
     ;;
 
     reload|force-reload)
-    /usr/bin/udevadm control --reload-rules
+    udevadm control --reload-rules
     ;;
 
     status)
-    status_of_proc /usr/sbin/udevd udevd && exit 0 || exit $?
+    status_of_proc /sbin/udevd udevd && exit 0 || exit $?
     ;;
 
     *)
