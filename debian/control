@@ -1,8 +1,8 @@
 Source: eudev
 Section: admin
 Priority: optional
-Maintainer: Jaret Jay Cantu <jaret@realitysend.com>
-Uploaders: Jaret Jay Cantu <jaret@realitysend.com>
+Maintainer: Anto <aryanto@chello.at>
+Uploaders: Anto <aryanto@chello.at>
 Standards-Version: 3.9.6
 Vcs-Git: https://github.com/gentoo/eudev.git
 Vcs-Browser: https://github.com/gentoo/eudev
@@ -16,17 +16,16 @@ Build-Depends: debhelper (>= 9),
                gtk-doc-tools,
                m4,
                dh-autoreconf,
-               automake (>= 1.11),
+               automake (>= 1.13),
                autoconf (>= 2.63),
                intltool,
                gperf,
                libcap-dev,
                libglib2.0-dev (>= 2.22.0),
-               libcryptsetup-dev (>= 2:1.6.0),
                libselinux1-dev (>= 2.1.9),
                libacl1-dev,
                libkmod-dev (>= 15),
-               libblkid-dev (>= 2.20),
+               libblkid-dev (>= 2.25),
                libgirepository1.0-dev (>= 1.31.1),
                gobject-introspection (>= 1.31.1)
 
@@ -41,11 +40,11 @@ Depends: ${shlibs:Depends},
          adduser,
          libudev1 (= ${binary:Version}),
          lsb-base (>= 3.0-6),
-         util-linux (>= 2.16),
+         util-linux (>= 2.25),
          s390-tools (>> 1.6.2) [s390],
          procps
 Breaks: consolekit (<< 0.4.6-1),
-        kmod (<< 14),
+        kmod (<< 15),
         systemd,
         plymouth (<< 0.9.0-7)
 Description: /dev/ and hotplug management daemon

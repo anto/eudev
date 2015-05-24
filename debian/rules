@@ -13,18 +13,12 @@ CONFFLAGS = \
 	--exec-prefix= \
 	--with-rootprefix= \
 	--with-rootlibdir=/lib/$(DEB_HOST_MULTIARCH) \
-	--with-firmware-path=/lib/firmware \
 	--disable-silent-rules
-
-ifeq (,$(findstring stage1,$(DEB_BUILD_PROFILES)))
-CONFFLAGS += --enable-libcryptsetup
-endif
 
 CONFFLAGS_deb = \
 	--enable-selinux \
 	--enable-introspection \
 	--enable-gtk-doc \
-	--enable-compat-libs \
 	$(NULL)
 
 CONFFLAGS_udeb = \
@@ -54,8 +48,6 @@ override_dh_auto_clean:
 	dh_auto_clean --builddirectory=build-deb
 	dh_auto_clean --builddirectory=build-udeb
 	rm -rf debian/install/
-	# remove pre-generated man pages so they are rebuilt
-	rm -f man/*.[13578]
 
 override_dh_install:
 	# remove unnecessary / unused files

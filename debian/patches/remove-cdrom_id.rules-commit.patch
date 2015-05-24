@@ -1,0 +1,19 @@
+Notes - Added for eudev-3.0 - Anto
+Remove commit https://github.com/gentoo/eudev/commit/681b0e3876ba6ed10efbc139c0d4346446500e07
+
+diff --git a/rules/60-cdrom_id.rules b/rules/60-cdrom_id.rules
+index 5c3b52e..6eaf76a 100644
+--- a/rules/60-cdrom_id.rules
++++ b/rules/60-cdrom_id.rules
+@@ -15,11 +15,6 @@ ENV{DISK_EJECT_REQUEST}=="?*", RUN+="cdrom_id --eject-media $devnode", GOTO="cdr
+ # enable the receiving of media eject button events
+ IMPORT{program}="cdrom_id --lock-media $devnode"
+ 
+-# ejecting a CD does not remove the device node, so mark the systemd device
+-# unit as inactive while there is no medium; this automatically cleans up of
+-# stale mounts after ejecting
+-ENV{DISK_MEDIA_CHANGE}=="?*", ENV{ID_CDROM_MEDIA}!="?*", ENV{SYSTEMD_READY}="0"
+-
+ KERNEL=="sr0", SYMLINK+="cdrom", OPTIONS+="link_priority=-100"
+ 
+ LABEL="cdrom_end"

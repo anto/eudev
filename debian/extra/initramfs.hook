@@ -22,7 +22,7 @@ root_over_the_network() {
 
 . /usr/share/initramfs-tools/hook-functions
 
-copy_exec /sbin/udevd      /sbin
+copy_exec /sbin/udevd     /sbin
 copy_exec /bin/udevadm    /bin
 
 # copy compat symlink
@@ -32,8 +32,8 @@ mkdir -p $DESTDIR/etc/udev
 cp -p /etc/udev/udev.conf $DESTDIR/etc/udev/
 
 mkdir -p $DESTDIR/lib/udev/rules.d/
-for rules in 50-firmware.rules 50-udev-default.rules 60-persistent-storage.rules \
-	80-drivers-modprobe.rules \
+for rules in 50-udev-default.rules 60-persistent-storage.rules \
+	80-drivers.rules \
 	64-md-raid.rules 60-persistent-storage-lvm.rules \
 	55-dm.rules 60-persistent-storage-dm.rules; do
   if   [ -e /etc/udev/rules.d/$rules ]; then

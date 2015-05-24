@@ -23,14 +23,3 @@ index 8551f47..f764075 100644
 +SUBSYSTEM=="scsi", ENV{DEVTYPE}=="scsi_device", TEST!="[module/sg]", RUN{builtin}+="kmod load sg"
  
  LABEL="drivers_end"
-diff --git a/rules/80-drivers-modprobe.rules b/rules/80-drivers-modprobe.rules
-index 14c5b87..d6c700e 100644
---- a/rules/80-drivers-modprobe.rules
-+++ b/rules/80-drivers-modprobe.rules
-@@ -9,5 +9,6 @@ SUBSYSTEM=="memstick", RUN+="/sbin/modprobe ms_block mspro_block"
- SUBSYSTEM=="i2o", RUN+="/sbin/modprobe i2o_block"
- SUBSYSTEM=="module", KERNEL=="parport_pc", RUN+="/sbin/modprobe ppdev"
- KERNEL=="mtd*ro", ENV{MTD_FTL}=="smartmedia", RUN+="/sbin/modprobe sm_ftl"
-+SUBSYSTEM=="scsi", ENV{DEVTYPE}=="scsi_device", TEST!="[module/sg]", RUN+="/sbin/modprobe sg"
- 
- LABEL="drivers_end"

@@ -3,8 +3,9 @@ lib/udev/*
 bin/udevadm
 sbin/udevadm
 sbin/udevd
-usr/share/man/man7/udev.7
-usr/share/man/man8/*udev*.8
+usr/share/man/man5/udev*.5
+usr/share/man/man7/udev*.7
+usr/share/man/man8/udev*.8
 # currently installed by bash-completion, file a bug to get it removed
 #usr/share/bash-completion/completions/udevadm
 usr/share/pkgconfig/udev.pc
