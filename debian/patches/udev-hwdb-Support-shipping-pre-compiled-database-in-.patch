@@ -32,13 +32,13 @@ diff --git a/man/udev.xml b/man/udev.xml
 index e40af40..7befa97 100644
 --- a/man/udev.xml
 +++ b/man/udev.xml
-@@ -758,7 +758,9 @@
+@@ -770,7 +770,9 @@
  
        <para>The content of all hwdb files is read by
        <citerefentry><refentrytitle>udevadm</refentrytitle><manvolnum>8</manvolnum></citerefentry>
 -      and compiled to a binary database located at <filename>/etc/udev/hwdb.bin</filename>.
 +      and compiled to a binary database located at <filename>/etc/udev/hwdb.bin</filename>,
-+      or alternatively <filename>/usr/lib/udev/hwdb.bin</filename> if you want ship the compiled
++      or alternatively <filename>/lib/udev/hwdb.bin</filename> if you want ship the compiled
 +      database in an immutable image.
        During runtime only the binary database is used.</para>
    </refsect1>
@@ -136,7 +136,7 @@ index 7af230c..0a1365e 100644
                  udev_hwdb_unref(hwdb);
                  return NULL;
          }
-@@ -352,15 +371,25 @@ _public_ struct udev_hwdb *udev_hwdb_unref(struct udev_hwdb *hwdb) {
+@@ -352,15 +371,26 @@ _public_ struct udev_hwdb *udev_hwdb_unref(struct udev_hwdb *hwdb) {
  }
  
  bool udev_hwdb_validate(struct udev_hwdb *hwdb) {
@@ -157,6 +157,7 @@ index 7af230c..0a1365e 100644
 +                        break;
 +                }
 +        }
++
 +        if (!found)
                  return true;
 
@@ -220,7 +221,7 @@ diff --git a/src/libudev/Makefile.am b/src/libudev/Makefile.am
 index 35f5be2..0fb53e0 100644
 --- a/src/libudev/Makefile.am
 +++ b/src/libudev/Makefile.am
-@@ -19,6 +19,7 @@ AM_CPPFLAGS = \
+@@ -20,6 +20,7 @@ AM_CPPFLAGS = \
  	-DUDEV_CONF_FILE=\"$(udevconffile)\" \
  	-DUDEV_HWDB_BIN=\"$(udevhwdbbin)\" \
  	-DUDEV_VERSION=$(UDEV_VERSION) \

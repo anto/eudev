@@ -1,3 +1,36 @@
+eudev (219:3.0-2) UNRELEASED; urgency=medium
+
+  * Update to sync-up with gentoo/eudev source updates
+    Commits on gentoo/eudev up to 26/05/2015 23:50 in descending order:
+    - commit fb2906b46794e2fcc7aa23c5c22078195885b16a
+    - commit c0a12c12bac5d308758758e37662740094251391
+    - commit a23afd63bf9b1002aab9071ce481d3b8a844b27b
+    - commit bed01621a67e20b9b0f2826a7a34c70de28b67a2
+    - commit 7be67389a999c3989bd13b5799a01d1e19d92214
+    - commit 7da1cec992bce135017e608a235d424605859814
+    - commit 8d8a4087fb08bd271c0caf75266bf124e50e8cae
+    - commit 7d5298810acc1b8ca10c6a69898a82f4eb9808cb
+    - commit 1fc303749c2fdab0444a6771defcee8b7401952c
+    - commit adf171757dc1bcf2c5e8b1918e057b9440f43d0e
+    - commit dae71aedd20af3eade4b8e0cb1dc68444a60c7ef
+    - commit 4e8a53c6810ab423037b4eff75bf375fde3e0f5d
+    - commit 7b6429823bcdcdc62568a4090d4698771ad8bc14
+    - commit 5519f19a27f4b5e78f3018953166ccd70c319667
+    - commit c05ef0c2e24fcaef4d76a3409b165bc643f33ecc
+    - commit 97862d111887e7295c2074f78b629fae10c19dd0
+    - commit 0aef2f056ac53c114890e6e96e8f31f87406ac12
+    - commit 1571f2751556e42fe54d3e0ff6472bff210b1817
+    - commit 0c804867b569142ffd07a13c6c350eca35cd81af
+    - commit 818b85cb3bfeca3429e2b010e3437d4e532fcb4c
+    - commit 1a332b3cd9421daca62759248c8fd49f8c2e1654
+    - commit 2024b4b263c10edab79bed63ccf5ba0f94f1dea4
+    - commit 6fe5ac51c6649296ec85871fce6d4f4e95b5d50d
+    - commit 1b8e79f601d983121389dcecd223ba4022388f88
+    - commit 51421b5d8fa2354dea4649b32735ee2b595d191c
+    - commit 0bd129628e4a17d21d72ee1788fbc5bafdc86142
+
+ -- Anto <aryanto@chello.at>  Tue, 26 May 2015 23:50:23 +0200
+
 eudev (219:3.0-1) UNRELEASED; urgency=medium
 
   * Update for gentoo eudev master branch up to commits on May 4, 2015.

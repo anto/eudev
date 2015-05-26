@@ -17,7 +17,7 @@ diff --git a/configure.ac b/configure.ac
 index ed0635e..f8c0e7f 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -156,7 +156,7 @@ AS_IF(
+@@ -165,7 +165,7 @@ AS_IF(
  AC_SUBST([rootprefix], [$with_rootprefix])
  AC_SUBST([rootlibdir], [$with_rootlibdir])
  AC_SUBST([rootlibexecdir], [${with_rootlibexecdir}])
