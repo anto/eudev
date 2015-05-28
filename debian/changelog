@@ -1,3 +1,24 @@
+eudev (219:3.0-3) UNRELEASED; urgency=medium
+
+  * Update to sync-up with gentoo/eudev source updates
+    Commits on gentoo/eudev up to 27/05/2015 23:30 CET in descending order:
+    - commit 10647c881b4d2740a226cb954cf4b91c6e462907
+    - commit cf427188ad5e69e5de84461b4107697aa46f7e63
+    - commit 1713bd21e6a8005734d0086a1b9eab2812939ba5
+    - commit 8943501993322c59a6eb5be456b0d716aafff21e
+    - commit 9aee6bf164c53abf4ea25379f600cd1ed4f45150
+    - commit b831062ea7cfa5a8e6f6bcc570685a92532b60d8
+    - commit c87734cd271ebaf28e9002bf43406b9f17d0e883
+    - commit 04d6ad05a33945a782cd0a67daf57016cff40435
+    - commit a5be4ae907d6da34d6ec83d4888bd9c75b8d349a
+    - commit 8ab818626d8ef8cd303e0c16765252c6fb22ef17
+    - commit 233b58f3ac6d9ee34f0e428968c36b2e72ddb20c
+    - commit b27de334488b0a7f9c6840b09d57fa2873034f39
+    - commit f8f26ec383ba9fc84b79153978c4effbacb0ac5f
+    - commit 52ad09b0bc9409b362da83002ffef8b54264b2dc
+
+ -- Anto <aryanto@chello.at>  Wed, 27 May 2015 23:30:23 +0200
+
 eudev (219:3.0-2) UNRELEASED; urgency=medium
 
   * Update to sync-up with gentoo/eudev source updates
