@@ -1,3 +1,18 @@
+eudev (220:3.1-1) UNRELEASED; urgency=medium
+
+  * Update to sync-up with gentoo/eudev source updates
+    Commits on gentoo/eudev up to 30/05/2015 at 22:43:18 CEST in descending order:
+    - commit ebb37f6a47f64314a81b40e3befbe3fc9ced8f4a
+    - commit 53997d40dd7f1bbd7f40dcc5602f971cce978a12
+    - commit 047416ff0f9ea822d6fdc3dabb4039f2ebcdab77
+    - commit 0dd8f3848e5982c6cf23dc185e01392461d2a81d
+    - commit 71640ee49826a4e7d35dc31564ed2fab1996beae
+    - commit 5803c30ed226a4e5a4ab12e4d873c8a586ca8cf6
+    - commit cca9d72d96199dc76d6881690103b64ffddfa7b0
+    - commit 63126619bb1274dc5edba69f2fd7d6c74d551425
+
+ -- Anto <aryanto@chello.at>  Sat, 30 May 2015 22:43:18 +0100
+
 eudev (219:3.0-3) UNRELEASED; urgency=medium
 
   * Update to sync-up with gentoo/eudev source updates

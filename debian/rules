@@ -19,6 +19,7 @@ CONFFLAGS_deb = \
 	--enable-selinux \
 	--enable-introspection \
 	--enable-gtk-doc \
+	--enable-manpages \
 	$(NULL)
 
 CONFFLAGS_udeb = \
