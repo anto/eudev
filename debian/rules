@@ -128,7 +128,7 @@ override_dh_makeshlibs:
 
 autoreconf:
 	gtkdocize --copy --docdir docs/
-	autoreconf -f -i
+	./autogen.sh
 
 override_dh_autoreconf:
 	dh_autoreconf debian/rules -- autoreconf
