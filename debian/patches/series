@@ -1,0 +1,16 @@
+## v215-stable patches:
+build-sys-don-t-move-libgudev-to-lib.patch
+
+## Cherry-picked patches:
+udev-hwdb-Support-shipping-pre-compiled-database-in-.patch
+
+## Debian specific patches:
+Add-note-to-udev.conf-that-changes-to-that-file-requ.patch
+Load-sg-module-from-80-drivers.rules.patch
+Updates-to-default-device-permissions.patch
+Set-default-polling-interval-on-removable-devices-as.patch
+remove-cdrom_id.rules-commit.patch
+more-cd-aliases.patch
+
+## Devuan/eudev specific patches
+Always-install-non-arch-specific-files-in-lib-udev.patch

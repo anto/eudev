@@ -1,0 +1,2 @@
+version=3
+https://github.com/gentoo/eudev/archive/v(\d+)\.tar\.gz
