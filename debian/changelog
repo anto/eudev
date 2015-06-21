@@ -1,3 +1,9 @@
+eudev (220:3.1.2-1) UNRELEASED; urgency=medium
+
+  * Clean up prior to merging eudev-deb into eudev
+
+ -- Anto <aryanto@chello.at>  Mon, 22 Jun 2015 00:48:27 +0200 
+
 eudev (220:3.1.1-1) UNRELEASED; urgency=medium
 
   * Update to sync-up with gentoo/eudev source updates

@@ -4,11 +4,11 @@ Priority: optional
 Maintainer: Anto <aryanto@chello.at>
 Uploaders: Anto <aryanto@chello.at>
 Standards-Version: 3.9.6
-Vcs-Git: https://github.com/gentoo/eudev.git
-Vcs-Browser: https://github.com/gentoo/eudev
+Vcs-Git: https://github.com/anto/eudev.git
+Vcs-Browser: https://github.com/anto/eudev
 X-Python-Version: >= 2.7
 XS-Testsuite: autopkgtest
-Homepage: https://github.com/gentoo/eudev
+Homepage: https://github.com/anto/eudev
 Build-Depends: debhelper (>= 9),
                pkg-config,
                docbook-xsl,
