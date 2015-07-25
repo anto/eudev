@@ -1,7 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
 dist_udevrules_DATA = \
-	42-usb-hid-pm.rules \
 	50-udev-default.rules \
 	60-block.rules \
 	60-cdrom_id.rules \
@@ -12,10 +11,8 @@ dist_udevrules_DATA = \
 	60-persistent-storage-tape.rules \
 	60-persistent-v4l.rules \
 	60-serial.rules \
-	61-accelerometer.rules \
 	64-btrfs.rules \
 	70-mouse.rules \
-	70-touchpad.rules \
 	75-net-description.rules \
 	75-probe_mtd.rules \
 	78-sound-card.rules \
