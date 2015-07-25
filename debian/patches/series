@@ -1,6 +1,3 @@
-## v215-stable patches:
-build-sys-don-t-move-libgudev-to-lib.patch
-
 ## Cherry-picked patches:
 udev-hwdb-Support-shipping-pre-compiled-database-in-.patch
 

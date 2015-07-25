@@ -1,3 +1,15 @@
+eudev (220:3.1.2-2) UNRELEASED; urgency=medium
+
+  * Clean up after merging commits from gentoo/eudev
+
+    Most changes are related to the following:
+    - Removal of Gobject libudev support
+      commit 252150e181c58c5ae58ffac144971767df9921f7
+    - Removal of gtk-docs
+      commit 1b6370e74bd6927a5c594210cd6728feda9c4616    
+
+ -- Anto <aryanto@chello.at>  Mon, 22 Jun 2015 00:48:27 +0200 
+
 eudev (220:3.1.2-1) UNRELEASED; urgency=medium
 
   * Clean up prior to merging eudev-deb into eudev
