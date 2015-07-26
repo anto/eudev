@@ -9,5 +9,6 @@ Set-default-polling-interval-on-removable-devices-as.patch
 remove-cdrom_id.rules-commit.patch
 more-cd-aliases.patch
 
-## Devuan/eudev specific patches
+## local specific patches
 Always-install-non-arch-specific-files-in-lib-udev.patch
+revert_commit_75e930e.patch
