@@ -107,7 +107,7 @@ index 7af230c..0a1365e 100644
 +        }
 +
          if (!hwdb->f) {
--                log_debug(UDEV_HWDB_BIN "does not exist, please run udevadm hwdb --update");
+-                log_debug(UDEV_HWDB_BIN " does not exist, please run udevadm hwdb --update");
 +                log_debug("%s does not exist, please run udevadm hwdb --update", hwdb_bin_path);
                  udev_hwdb_unref(hwdb);
                  return NULL;

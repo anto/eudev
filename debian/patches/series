@@ -11,4 +11,3 @@ more-cd-aliases.patch
 
 ## local specific patches
 Always-install-non-arch-specific-files-in-lib-udev.patch
-revert_commit_75e930e.patch
