@@ -32,7 +32,7 @@ diff --git a/man/udev.xml b/man/udev.xml
 index e40af40..7befa97 100644
 --- a/man/udev.xml
 +++ b/man/udev.xml
-@@ -770,7 +770,9 @@
+@@ -763,7 +763,9 @@
  
        <para>The content of all hwdb files is read by
        <citerefentry><refentrytitle>udevadm</refentrytitle><manvolnum>8</manvolnum></citerefentry>

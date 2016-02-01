@@ -1,3 +1,10 @@
+eudev (220:3.1.5-1) UNRELEASED; urgency=medium
+
+  * Synchronise local patches after merging
+  * Merge upstream updates up to commit 71ff5b6 - 22/11/2015
+
+ -- Anto <aryanto@chello.at>  Mon, 01 Feb 2016 23:32:17 +0100
+
 eudev (220:3.1.2-3) UNRELEASED; urgency=medium
 
   * Clean up local patches after merging
