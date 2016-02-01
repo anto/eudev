@@ -1,6 +1,6 @@
 
 AC_PREREQ([2.68])
-AC_INIT([eudev],[3.1.2],[https://github.com/gentoo/eudev/issues])
+AC_INIT([eudev],[3.1.5],[https://github.com/gentoo/eudev/issues])
 AC_SUBST(UDEV_VERSION, 220)
 AC_CONFIG_SRCDIR([src/udev/udevd.c])
 
@@ -269,10 +269,25 @@ AC_ARG_ENABLE([hwdb], AS_HELP_STRING([--enable-hwdb],[install hwdb.d files]),[],
 AM_CONDITIONAL(ENABLE_HWDB, [test "x$enable_hwdb" = "xyes"])
 
 # ------------------------------------------------------------------------------
+# rule-generator - persistent network and optical device rule generator
+# ------------------------------------------------------------------------------
+AC_ARG_ENABLE([rule-generator],
+        AS_HELP_STRING([--enable-rule-generator], [enable legacy persistent network, cdrom support]),
+        [], [enable_rule_generator=no])
+
+if test "x${enable_rule_generator}" != xno; then
+        AC_DEFINE([ENABLE_RULE_GENERATOR], [1], [Define if we are enabling rule generator])
+fi
+
+AM_CONDITIONAL([ENABLE_RULE_GENERATOR], [test "x$enable_rule_generator" = xyes])
+
+# ------------------------------------------------------------------------------
 
 AC_CONFIG_FILES([Makefile
                  hwdb/Makefile
                  man/Makefile
+                 rule_generator/Makefile
+                 rule_generator/write_net_rules
                  rules/Makefile
                  src/Makefile
                  src/ata_id/Makefile
